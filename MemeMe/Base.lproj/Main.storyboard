@@ -96,10 +96,12 @@
                     <connections>
                         <outlet property="actionButton" destination="GZQ-VP-z0b" id="b8t-5c-c7H"/>
                         <outlet property="bottomTextField" destination="v0W-Ms-HWQ" id="4es-F9-8kf"/>
+                        <outlet property="bottomToolBar" destination="pmN-OO-yyj" id="oWu-xm-iDS"/>
                         <outlet property="cameraButton" destination="fDI-Vh-w0r" id="fZs-VI-BNr"/>
                         <outlet property="cancelButton" destination="9pj-Cm-bEd" id="RPn-be-UqP"/>
                         <outlet property="imagePickerView" destination="tMt-7j-hHk" id="b1Z-PE-izo"/>
                         <outlet property="topTextField" destination="yy7-6V-oBP" id="Xoe-ua-aTA"/>
+                        <outlet property="topToolBar" destination="IZB-qW-U2C" id="8rD-vy-5a9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
