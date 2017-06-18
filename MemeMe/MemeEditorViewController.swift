@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var imagePickerView: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -26,8 +26,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         topTextField.delegate = self
         bottomTextField.delegate = self
-        
-        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+
         
         let memeTextAttributes:[String:Any] = [
             NSStrokeColorAttributeName: UIColor.black,
@@ -39,17 +38,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         topTextField.defaultTextAttributes = memeTextAttributes
         bottomTextField.defaultTextAttributes = memeTextAttributes
         
-        resetTextField()
+        configureTextField(topTextField, defaultText: "TOP")
+        configureTextField(bottomTextField, defaultText: "BOTTOM")
+        
         topTextField.textAlignment = .center
         bottomTextField.textAlignment = .center
         
         disableTopBarButtons()
     }
     
+    func configureTextField(_ textField: UITextField, defaultText: String) {
+        textField.text = defaultText
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(animated)
         subscribeToKeyboardNotifications()
+        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -150,15 +156,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         actionButton.isEnabled = false
     }
     
-    func resetTextField(top: Bool = true, bottom: Bool = true) {
-        if top {
-            topTextField.text = "TOP"
-        }
-        if bottom {
-            bottomTextField.text = "BOTTOM"
-        }
-    }
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -174,13 +171,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func cancel(_ sender: Any) {
-        resetTextField()
+        configureTextField(topTextField, defaultText: "TOP")
+        configureTextField(bottomTextField, defaultText: "BOTTOM")
         imagePickerView.image = UIImage()
     }
 
 }
 
-extension ViewController: UITextFieldDelegate {
+extension MemeEditorViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
@@ -201,9 +199,9 @@ extension ViewController: UITextFieldDelegate {
         
         if textField.text == "" {
             if textField.restorationIdentifier == "topTextField" {
-                resetTextField(bottom: false)
+                configureTextField(topTextField, defaultText: "TOP")
             } else if textField.restorationIdentifier == "bottomTextField" {
-                resetTextField(top: false)
+                configureTextField(bottomTextField, defaultText: "BOTTOM")
             }
         }
         
