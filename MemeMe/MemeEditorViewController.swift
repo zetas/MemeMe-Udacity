@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MemeEditorViewController.swift
 //  MemeMe
 //
 //  Created by David Della Vecchia on 6/15/17.
@@ -24,10 +24,13 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        topTextField.delegate = self
-        bottomTextField.delegate = self
-
+        configureTextField(topTextField, defaultText: "TOP")
+        configureTextField(bottomTextField, defaultText: "BOTTOM")
         
+        disableTopBarButtons()
+    }
+    
+    func configureTextField(_ textField: UITextField, defaultText: String) {
         let memeTextAttributes:[String:Any] = [
             NSStrokeColorAttributeName: UIColor.black,
             NSForegroundColorAttributeName: UIColor.white,
@@ -35,20 +38,10 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
             NSStrokeWidthAttributeName: -3
         ]
         
-        topTextField.defaultTextAttributes = memeTextAttributes
-        bottomTextField.defaultTextAttributes = memeTextAttributes
-        
-        configureTextField(topTextField, defaultText: "TOP")
-        configureTextField(bottomTextField, defaultText: "BOTTOM")
-        
-        topTextField.textAlignment = .center
-        bottomTextField.textAlignment = .center
-        
-        disableTopBarButtons()
-    }
-    
-    func configureTextField(_ textField: UITextField, defaultText: String) {
+        textField.delegate = self
+        textField.defaultTextAttributes = memeTextAttributes
         textField.text = defaultText
+        textField.textAlignment = .center
     }
     
     override func viewWillAppear(_ animated: Bool) {
